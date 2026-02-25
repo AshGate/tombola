@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tombola - Parametres</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left"><div class="nav-logo">T</div><span class="nav-title">Tombola Panel</span></div>
+    <div class="nav-center">
+      <a href="/" class="nav-link">Tableau de bord</a>
+      <a href="/history" class="nav-link">Historique</a>
+      <a href="/settings" class="nav-link active">Parametres</a>
+    </div>
+    <div class="nav-right"><button id="logoutBtn" class="nav-btn nav-btn-danger" title="Deconnexion"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button></div>
+  </nav>
+
+  <main class="main-content">
+    <div class="page-header"><h1>Parametres</h1></div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="settings-section">
+          <h2>Configuration des prix</h2>
+          <div class="settings-grid">
+            <div class="setting-item"><label class="setting-label">Prix du ticket ($)</label><input type="number" class="setting-input" id="prixTicket" min="0"></div>
+            <div class="setting-item"><label class="setting-label">Gain employe par ticket ($)</label><input type="number" class="setting-input" id="gainEmploye" min="0"></div>
+            <div class="setting-item"><label class="setting-label">Gain entreprise par ticket ($)</label><input type="number" class="setting-input" id="gainEntreprise" min="0"></div>
+            <div class="setting-item"><label class="setting-label">Heure du recap journalier (0-23)</label><input type="number" class="setting-input" id="recapHour" min="0" max="23"></div>
+          </div>
+          <div style="margin-top:14px"><button class="btn-primary" id="saveConfigBtn">Sauvegarder la configuration</button></div>
+        </div>
+
+        <div class="settings-section">
+          <h2>Objectif mensuel</h2>
+          <div class="settings-grid">
+            <div class="setting-item"><label class="setting-label">Objectif tickets mensuel</label><input type="number" class="setting-input" id="monthlyGoal" min="0" placeholder="Ex: 500"></div>
+          </div>
+          <div style="margin-top:14px"><button class="btn-primary" id="saveObjectiveBtn">Sauvegarder l'objectif</button></div>
+        </div>
+
+        <div class="settings-section">
+          <h2>Alertes automatiques</h2>
+          <div id="alertsList"></div>
+          <div style="margin-top:14px"><button class="btn-primary" id="saveAlertsBtn">Sauvegarder les alertes</button></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/settings.js"></script>
+</body>
+</html>

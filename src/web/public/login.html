@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tombola - Connexion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h1>Tombola Panel</h1>
+        <p>Authentification via Discord</p>
+      </div>
+
+      <div id="step-discord" class="step active">
+        <div class="form-group">
+          <label for="discordId">ID Discord</label>
+          <input type="text" id="discordId" name="discordId" required autocomplete="off" placeholder="Votre ID Discord (ex: 123456789012345678)" inputmode="numeric" pattern="\d{17,20}">
+        </div>
+        <div id="error-discord" class="error-message" style="display:none;"></div>
+        <button type="button" id="requestCodeBtn" class="btn-primary">
+          <span class="btn-text">Recevoir un code</span>
+          <span class="btn-loader" style="display:none;"></span>
+        </button>
+      </div>
+
+      <div id="step-code" class="step" style="display:none;">
+        <div class="success-message" id="dm-sent">
+          Code envoye en message prive Discord.
+        </div>
+        <div class="form-group">
+          <label for="authCode">Code de verification</label>
+          <input type="text" id="authCode" name="authCode" required autocomplete="off" placeholder="Code a 6 chiffres" maxlength="6" inputmode="numeric" pattern="\d{6}">
+        </div>
+        <div id="error-code" class="error-message" style="display:none;"></div>
+        <button type="button" id="verifyCodeBtn" class="btn-primary">
+          <span class="btn-text">Se connecter</span>
+          <span class="btn-loader" style="display:none;"></span>
+        </button>
+        <button type="button" id="backBtn" class="btn-secondary">
+          Renvoyer un code
+        </button>
+      </div>
+    </div>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>

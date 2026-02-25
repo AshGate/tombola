@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tombola - Historique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left"><div class="nav-logo">T</div><span class="nav-title">Tombola Panel</span></div>
+    <div class="nav-center">
+      <a href="/" class="nav-link">Tableau de bord</a>
+      <a href="/history" class="nav-link active">Historique</a>
+      <a href="/settings" class="nav-link">Parametres</a>
+    </div>
+    <div class="nav-right"><button id="logoutBtn" class="nav-btn nav-btn-danger" title="Deconnexion"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button></div>
+  </nav>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Historique des ventes</h1>
+      <div class="header-actions">
+        <button class="btn-sm" id="exportBtn">Exporter CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="search-bar">
+          <input type="text" class="search-input" id="searchInput" placeholder="Rechercher par nom, prenom ou telephone...">
+          <select class="filter-select" id="sellerFilter"><option value="">Tous les vendeurs</option></select>
+          <select class="filter-select" id="periodFilter">
+            <option value="">Toute la periode</option>
+            <option value="today">Aujourd'hui</option>
+            <option value="7days">7 derniers jours</option>
+            <option value="30days">30 derniers jours</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Vendeur</th><th>Client</th><th>Telephone</th><th>Tickets</th><th>Gain employe</th><th>Gain entreprise</th></tr></thead>
+            <tbody id="salesTable"><tr><td colspan="7" class="empty-state">Chargement...</td></tr></tbody>
+          </table>
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/history.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tombola - Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <div class="nav-logo">T</div>
+      <span class="nav-title">Tombola Panel</span>
+    </div>
+    <div class="nav-center">
+      <a href="/" class="nav-link active">Tableau de bord</a>
+      <a href="/history" class="nav-link">Historique</a>
+      <a href="/settings" class="nav-link">Parametres</a>
+    </div>
+    <div class="nav-right">
+      <button id="logoutBtn" class="nav-btn nav-btn-danger" title="Deconnexion">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Tableau de bord</h1>
+      <div class="header-actions">
+        <div class="period-filter">
+          <button class="filter-btn active" data-period="all">Tout</button>
+          <button class="filter-btn" data-period="today">Aujourd'hui</button>
+          <button class="filter-btn" data-period="7days">7 jours</button>
+          <button class="filter-btn" data-period="30days">30 jours</button>
+          <button class="filter-btn" data-period="custom">Personnalise</button>
+        </div>
+        <div class="custom-dates" id="customDates" style="display:none;">
+          <input type="date" id="dateStart" class="date-input">
+          <span class="date-sep">-</span>
+          <input type="date" id="dateEnd" class="date-input">
+          <button class="btn-sm" id="applyDates">Appliquer</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3"/></svg></div>
+        <div class="stat-info"><span class="stat-label">Tickets vendus</span><span class="stat-value" id="totalTickets">--</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div class="stat-info"><span class="stat-label">Solde entreprise</span><span class="stat-value" id="totalEntreprise">--</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="stat-info"><span class="stat-label">Gains employes</span><span class="stat-value" id="totalEmployes">--</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-cyan"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="stat-info"><span class="stat-label">Ventes aujourd'hui</span><span class="stat-value" id="todaySales">--</span></div>
+      </div>
+    </div>
+
+    <div class="objective-bar" id="objectiveBar" style="display:none;">
+      <div class="obj-header"><span class="obj-label">Objectif mensuel</span><span class="obj-count" id="objCount">0 / 0 tickets</span></div>
+      <div class="progress-track"><div class="progress-fill" id="objFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card"><div class="card-header"><h2>Tickets par jour</h2></div><div class="card-body chart-container"><canvas id="chartTickets"></canvas></div></div>
+      <div class="card"><div class="card-header"><h2>Gains entreprise par jour</h2></div><div class="card-body chart-container"><canvas id="chartGains"></canvas></div></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h2>Classement vendeurs</h2><span class="badge" id="employeeCount">0</span></div>
+        <div class="card-body scroll-body" id="employeeList"><div class="empty-state">Chargement...</div></div>
+      </div>
+      <div class="card"><div class="card-header"><h2>Top vendeurs</h2></div><div class="card-body chart-container"><canvas id="chartTopSellers"></canvas></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Tirage au sort</h2></div>
+      <div class="card-body">
+        <div class="draw-section">
+          <p class="draw-desc">Choisir un gagnant parmi les tickets vendus. Chaque ticket = 1 chance.</p>
+          <button class="btn-primary" id="drawBtn">Lancer le tirage</button>
+        </div>
+        <div id="drawResult" style="display:none;" class="draw-result"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Saisons</h2><button class="btn-sm btn-outline" id="closeSeasonBtn">Cloturer la saison</button></div>
+      <div class="card-body" id="seasonsList"><div class="empty-state">Chargement...</div></div>
+    </div>
+  </main>
+
+  <div id="sellerModal" class="modal" style="display:none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content modal-lg">
+      <div class="modal-header"><h3 id="sellerModalTitle">Fiche vendeur</h3><button class="modal-close" id="sellerModalClose">&times;</button></div>
+      <div class="modal-body" id="sellerModalBody"><div class="empty-state">Chargement...</div></div>
+    </div>
+  </div>
+
+  <div id="seasonModal" class="modal" style="display:none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <h3>Cloturer la saison</h3>
+      <p>Toutes les ventes seront archivees et les stats remises a zero.</p>
+      <input type="text" id="seasonName" placeholder="Nom de la saison (optionnel)" autocomplete="off">
+      <div class="modal-actions"><button class="btn-secondary" id="seasonCancel">Annuler</button><button class="btn-primary" id="seasonConfirm">Cloturer</button></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
